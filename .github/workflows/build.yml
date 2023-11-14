@@ -67,3 +67,21 @@ jobs:
           labels: ${{ steps.meta-windows.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      - name: Build kernel
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          target: windows-kernel
+          platforms: 'linux/amd64'
+          tags: kernel:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          load: true
+      - name: Kernel Copy
+        run: |
+          docker create --name kernel kernel:latest
+          docker cp kernel:/wsl-kernel/arch/x86/boot/bzImage cse123pa2akernel
+      - name: Kernel Publish
+        uses: actions/upload-artifact@v3
+        with:
+          path: cse123pa2akernel
