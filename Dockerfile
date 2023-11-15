@@ -20,7 +20,7 @@ RUN git clone --depth 1 https://github.com/microsoft/WSL2-Linux-Kernel.git --bra
 COPY windows-configs/.config /wsl-kernel/.config
 RUN yes "" | make -C /wsl-kernel -j $(expr $(nproc) - 1) SUBDIRS=net/openvswitch modules
 
-FROM wsl-build as windows-kernel
+FROM wsl-build as wsl-kernel
 RUN yes "" | make -C /wsl-kernel -j $(expr $(nproc) - 1)
 RUN make -C /wsl-kernel install
 

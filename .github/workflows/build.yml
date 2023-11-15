@@ -71,7 +71,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          target: windows-kernel
+          target: wsl-kernel
           platforms: 'linux/amd64'
           tags: kernel:latest
           cache-from: type=gha
@@ -84,4 +84,5 @@ jobs:
       - name: Kernel Publish
         uses: actions/upload-artifact@v3
         with:
+          name: cse123pa2akernel
           path: cse123pa2akernel
